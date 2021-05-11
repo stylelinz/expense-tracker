@@ -1,0 +1,11 @@
+<a href="/expenses/create">New expense</a>
+<ul>
+  {{#each records}}
+    <li>
+      <h3>{{this.name}}</h3>
+      <p>{{this.category}}</p>
+      <p>{{this.date}}</p>
+      <p>{{this.amount}}</p>
+    </li>
+  {{/each}}
+</ul>

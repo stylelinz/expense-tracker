@@ -45,4 +45,14 @@ router.put('/:id', async (req, res) => {
   }
 })
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    await Record.findByIdAndDelete(id)
+    return res.redirect('/')
+  } catch (err) {
+    console.log(err)
+  }
+})
+
 module.exports = router

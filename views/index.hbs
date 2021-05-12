@@ -8,6 +8,9 @@
       <p>{{date}}</p>
       <p>{{amount}}</p>
       <a href="/expenses/{{_id}}/edit">edit</a>
+      <form action="/expenses/{{_id}}?_method=DELETE" method="post" style="display: inline;">
+        <button type="submit">Delete</button>
+      </form>
     </li>
   {{/forEach}}
 </ul>

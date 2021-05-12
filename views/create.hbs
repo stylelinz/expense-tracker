@@ -1,9 +1,16 @@
 <form action="/expenses" method="post">
-  <label for="name"></label>
-  <input type="text" name="name" id="name" placeholder="name">
-  <label for="date"></label>
-  <input type="date" name="date" id="date" placeholder="date">
-  <label for="amount"></label>
-  <input type="number" name="amount" id="amount" placeholder="amount">
+  <label for="name">支付項目</label>
+  <input type="text" name="name" id="name" placeholder="name" required>
+  <label for="date">支付日期</label>
+  <input type="date" name="date" id="date" placeholder="date" value="{{today}}" max="{{today}}" required>
+  <label for="category">支付類別</label>
+  <select name="categoryId" id="category" required>
+    <option value="" selected disabled hidden>選擇類別</option>
+    {{#each categories}}
+      <option value="{{this._id}}">{{this.categoryName}}</option>
+    {{/each}}
+  </select>
+  <label for="amount">支付金額</label>
+  <input type="number" name="amount" id="amount" placeholder="amount" required>
   <button type="submit">Create</button>
 </form>

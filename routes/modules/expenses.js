@@ -3,11 +3,11 @@ const router = express.Router()
 
 const Record = require('../../models/Record')
 const Category = require('../../models/Category')
+const dateFormat = require('../../util/formattedDate')
 
 router.get('/create', async (req, res) => {
   const categories = await Category.find().lean()
-  const date = new Date()
-  const today = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+  const today = dateFormat()
   return res.render('create', { categories, today })
 })
 

@@ -1,0 +1,17 @@
+<form action="/expenses/{{expense._id}}?_method=PUT" method="post">
+  <label for="name">支付項目</label>
+  <input type="text" name="name" id="name" placeholder="name" value="{{expense.name}}" required>
+  <label for="date">支付日期</label>
+  <input type="date" name="date" id="date" placeholder="date" max="{{today}}" value="{{expense.date}}" required>
+  <label for="category">支付類別</label>
+  <select name="categoryId" id="category" required>
+    <option value="" disabled>選擇類別</option>
+    {{#forEach categories}}
+    {{!-- TODO: This #eq issue will fix as improve edit ui --}}
+      <option value="{{_id}}" {{#eq this._id expense.categoryId}} selected {{/eq}}>{{this.categoryName}}</option>
+    {{/forEach}}
+  </select>
+  <label for="amount">支付金額</label>
+  <input type="number" name="amount" id="amount" placeholder="amount" value="{{expense.amount}}" required>
+  <button type="submit">Edit</button>
+</form>

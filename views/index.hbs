@@ -2,8 +2,9 @@
 <ul>
   {{#each records}}
     <li>
+      <p>{{this.categoryId.categoryIcon}}</p>
       <h3>{{this.name}}</h3>
-      <p>{{this.category}}</p>
+      <p>{{this.categoryId.categoryName}}</p>
       <p>{{this.date}}</p>
       <p>{{this.amount}}</p>
     </li>

@@ -7,4 +7,4 @@ const categorySchema = new Schema({
   categoryIcon: { type: String, required: true }
 })
 
-module.exports = mongoose.model('CategoryModel', categorySchema)
+module.exports = mongoose.model('Categories', categorySchema)

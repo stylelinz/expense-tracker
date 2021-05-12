@@ -6,9 +6,9 @@
   <label for="category">支付類別</label>
   <select name="categoryId" id="category" required>
     <option value="" selected disabled hidden>選擇類別</option>
-    {{#each categories}}
+    {{#forEach categories}}
       <option value="{{this._id}}">{{this.categoryName}}</option>
-    {{/each}}
+    {{/forEach}}
   </select>
   <label for="amount">支付金額</label>
   <input type="number" name="amount" id="amount" placeholder="amount" required>

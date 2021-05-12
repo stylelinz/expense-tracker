@@ -1,12 +1,12 @@
 <a href="/expenses/create">New expense</a>
 <ul>
-  {{#each records}}
+  {{#forEach records}}
     <li>
-      <p>{{this.categoryId.categoryIcon}}</p>
-      <h3>{{this.name}}</h3>
-      <p>{{this.categoryId.categoryName}}</p>
-      <p>{{this.date}}</p>
-      <p>{{this.amount}}</p>
+      <p>{{categoryId.categoryIcon}}</p>
+      <h3>{{name}}</h3>
+      <p>{{categoryId.categoryName}}</p>
+      <p>{{date}}</p>
+      <p>{{amount}}</p>
     </li>
-  {{/each}}
+  {{/forEach}}
 </ul>

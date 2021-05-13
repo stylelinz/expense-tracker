@@ -1,6 +1,11 @@
 <a href="/expenses/create">New expense</a>
 <h2>{{totalAmount}}</h2>
 <ul>
+  {{#forEach categories}}
+  <li><a href="/?category={{categoryName}}">{{categoryName}}</a></li>
+  {{/forEach}}
+</ul>
+<ul>
   {{#forEach records}}
     <li>
       <p>{{categoryId.categoryIcon}}</p>

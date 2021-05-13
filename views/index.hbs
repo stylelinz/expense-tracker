@@ -1,22 +1,54 @@
-<a href="/expenses/create">New expense</a>
-<h2>{{totalAmount}}</h2>
-<ul>
-  {{#forEach categories}}
-  <li><a href="/?category={{categoryName}}">{{categoryName}}</a></li>
-  {{/forEach}}
-</ul>
-<ul>
-  {{#forEach records}}
-    <li>
-      <p>{{categoryId.categoryIcon}}</p>
-      <h3>{{name}}</h3>
-      <p>{{categoryId.categoryName}}</p>
-      <p>{{date}}</p>
-      <p>{{amount}}</p>
-      <a href="/expenses/{{_id}}/edit">edit</a>
-      <form action="/expenses/{{_id}}?_method=DELETE" method="post" style="display: inline;">
-        <button type="submit">Delete</button>
-      </form>
-    </li>
-  {{/forEach}}
-</ul>
+<div class="container shadow-lg pt-3">
+  <div class="row">
+    <div class="d-flex justify-content-center align-items-center">
+      <h2 class="align-top">總金額：</h2>
+      <h1>{{totalAmount}}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <button class="col-8 col-sm-6 mx-auto btn-secondary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+      支付類別
+    </button>
+    <ul class="dropdown-menu col-8 col-sm-6 mx-auto" aria-labelledby="dropdownMenuButton1">
+      {{#forEach categories}}
+      <li><a href="/?category={{categoryName}}" class="dropdown-item">{{categoryName}}</a></li>
+      {{/forEach}}
+    </ul>
+
+  </div>
+  <div class="row">
+    <a href="/expenses/create" class="col-8 col-sm-6 mx-auto btn btn-success">新增紀錄</a>
+  </div>
+  <div class="row">
+    <div class="col col-md-10 mx-auto">
+      <table class="table table-striped table-hover">
+        <tbody>
+          {{#forEach records}}
+          <tr class="align-middle">
+            <td>
+              <i class="{{categoryId.categoryIcon}}"></i>
+            </td>
+            <td>
+              <div class="d-flex flex-column justify-content-center align-items-start">
+                <h3>{{name}}</h3>
+                <small>{{date}}</small>
+              </div>
+            </td>
+            <td>
+              <h3>{{amount}}</h3>
+            </td>
+            <td>
+              <div class="d-flex justify-content-end">
+                <a href="/expenses/{{_id}}/edit" class="btn btn-outline-info">edit</a>
+                <form action="/expenses/{{_id}}?_method=DELETE" method="post" style="display: inline;">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {{/forEach}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

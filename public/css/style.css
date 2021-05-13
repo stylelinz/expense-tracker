@@ -1,0 +1,17 @@
+.row {
+  margin-top: 2rem;
+}
+.row:first-of-type h1 {
+  font-size: 4rem;
+}
+
+.row:first-of-type h2 {
+  font-size: 1.5rem;
+  margin-right: 3%;
+}
+td i {
+  font-size: 50px;
+}
+td .btn {
+  margin: 0.3rem;
+}

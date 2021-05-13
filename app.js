@@ -1,7 +1,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
-const helpers = require('handlebars-helpers')(['array', 'comparison'])
+const helpers = require('handlebars-helpers')()
 
 const routes = require('./routes')
 require('./config/mongoose')

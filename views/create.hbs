@@ -1,16 +1,30 @@
-<form action="/expenses" method="post">
-  <label for="name">支付項目</label>
-  <input type="text" name="name" id="name" placeholder="name" required>
-  <label for="date">支付日期</label>
-  <input type="date" name="date" id="date" value="{{today}}" max="{{today}}" required>
-  <label for="category">支付類別</label>
-  <select name="categoryId" id="category" required>
-    <option value="" selected disabled hidden>選擇類別</option>
-    {{#forEach categories}}
-      <option value="{{this._id}}">{{this.categoryName}}</option>
-    {{/forEach}}
-  </select>
-  <label for="amount">支付金額</label>
-  <input type="number" name="amount" id="amount" placeholder="amount" required>
-  <button type="submit">Create</button>
-</form>
+<div class="mt-5">
+  <div class="container">
+    <form action="/expenses" method="POST" class="shadow-lg p-3">
+      <div class="mb-3">
+        <label for="name" class="form-label">支付項目</label>
+        <input type="text" name="name" id="name" placeholder="name" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="date" class="form-label">支付日期</label>
+        <input type="date" name="date" id="date" value="{{today}}" max="{{today}}" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="category" class="form-label">支付類別</label>
+        <select name="categoryId" id="category" class="form-select" required>
+          <option value="" selected disabled hidden>選擇類別</option>
+          {{#forEach categories}}
+          <option value="{{this._id}}">{{this.categoryName}}</option>
+          {{/forEach}}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="amount" class="form-label">支付金額</label>
+        <input type="number" name="amount" id="amount" placeholder="amount" class="form-control" required>
+      </div>
+      <div class="d-flex flex-row-reverse">
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
+    </form>
+  </div>
+</div>

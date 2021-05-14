@@ -3,9 +3,13 @@ const db = require('../../config/mongoose')
 const categories = require('./categories.json')
 
 db.once('open', async () => {
-  for (const category of categories) {
-    await Category.create(category)
+  try {
+    for (const category of categories) {
+      await Category.create(category)
+    }
+    await db.close()
+    console.log('Close database...')
+  } catch (err) {
+    console.log(err)
   }
-  await db.close()
-  console.log('Close database...')
 })

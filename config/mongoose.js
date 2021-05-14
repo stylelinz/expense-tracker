@@ -6,7 +6,7 @@ mongoose.connect(mongodbUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false
-})
+}).catch(err => console.log(err))
 
 const db = mongoose.connection
 

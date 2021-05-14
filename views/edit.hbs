@@ -13,7 +13,7 @@
         <label for="category" class="form-label">支付類別</label>
         <select name="categoryId" id="category" class="form-select" required>
           {{#forEach categories}}
-          <option value="{{_id}}">{{categoryName}}</option>
+          <option value="{{_id}}" {{#eq categoryName ../expense.categoryId.categoryName}}selected{{/eq}}>{{categoryName}}</option>
           {{/forEach}}
         </select>
       </div>

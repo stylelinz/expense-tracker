@@ -15,10 +15,10 @@ router.get('/:id/edit', async (req, res) => {
   try {
     const { id } = req.params
     const categories = await Category.find().lean()
-    const expense = await Record.findById(id).populate({ path: 'categoryId' }).lean()
-    expense.date = dateFormat(expense.date)
+    const record = await Record.findById(id).populate({ path: 'categoryId' }).lean()
+    record.date = dateFormat(record.date)
     const today = dateFormat()
-    return res.render('edit', { categories, expense, today })
+    return res.render('edit', { categories, expense: record, today })
   } catch (err) {
     console.log(err)
   }

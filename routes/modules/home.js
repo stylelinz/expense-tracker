@@ -6,16 +6,10 @@ const Category = require('../../models/Category')
 
 router.get('/', async (req, res) => {
   try {
-    const { category } = req.query
-    const categories = await Category.find().lean()
+    const categories = await Category.find(null, 'categoryName').lean()
     // Render Category options
-    let records = await Record.find().populate({ path: 'categoryId' }).lean().sort({ date: 'desc' })
-    const filteredRecords = records.filter(record => record.categoryId.categoryName === category)
-    if (category) {
-      records = filteredRecords
-    }
-    const amounts = records.map(record => record.amount)
-    const totalAmount = amounts.length ? amounts.reduce((prev, current) => prev + current) : 0
+    const records = await getAllRecords()
+    const [{ total: totalAmount }] = await Record.aggregate([{ $group: { _id: null, total: { $sum: '$amount' } } }])
     return res.render('index', { records, totalAmount, categories })
   } catch (err) {
     console.log(err)
@@ -23,3 +17,32 @@ router.get('/', async (req, res) => {
 })
 
 module.exports = router
+
+async function getMonthOptions () {
+  const dates = await Record.aggregate([{ $group: { _id: { $dateToString: { format: '%Y-%m', date: '$date' } } } }])
+  return dates.map(date => date._id)
+}
+
+async function getAllRecords () {
+  const pipeline = [
+    {
+      $lookup: {
+        from: 'categories',
+        localField: 'category',
+        foreignField: 'categoryName',
+        as: 'c'
+      }
+    },
+    { $unwind: { path: '$c' } },
+    {
+      $project: {
+        name: 1,
+        amount: 1,
+        category: 1,
+        icon: '$c.categoryIcon',
+        date: { $dateToString: { format: '%Y-%m-%d', date: '$date' } }
+      }
+    }
+  ]
+  return await Record.aggregate(pipeline)
+}

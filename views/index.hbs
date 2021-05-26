@@ -10,6 +10,7 @@
       支付類別
     </button>
     <ul class="dropdown-menu col-8 col-sm-6 mx-auto" aria-labelledby="dropdownMenuButton1">
+      <li><a href="/?category=" class="dropdown-item">全部</a></li>
       {{#forEach categories}}
       <li><a href="/?category={{categoryName}}" class="dropdown-item">{{categoryName}}</a></li>
       {{/forEach}}
@@ -31,7 +32,7 @@
             <td>
               <div class="d-flex flex-column justify-content-center align-items-start">
                 <h3>{{name}}</h3>
-                <small>{{date}}</small>
+                <small>{{this.date}}</small>
               </div>
             </td>
             <td>

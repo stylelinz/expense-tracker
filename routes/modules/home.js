@@ -8,10 +8,12 @@ router.get('/', async (req, res) => {
   try {
     const option = req.query
     // Render Category options
-    const categories = await Category.find(null, 'categoryName').lean()
-    const months = await getRecordsMonth()
+    const [categories, months] = await Promise.all([Category.find(null, 'categoryName').lean(), getRecordsMonth()])
     const records = await getAllRecords(option)
-    const totalAmount = records.length ? await getTotalAmount(option) : 0
+    const totalAmount = getTotalAmount(records)
+    records.forEach(record => {
+      record.amount = formatNumber(record.amount)
+    })
     return res.render('index', { records, totalAmount, categories, months })
   } catch (err) {
     console.log(err)
@@ -54,16 +56,6 @@ async function getAllRecords (filterOptions) {
   return await Record.aggregate(pipeline)
 }
 
-async function getTotalAmount (filterOptions) {
-  const pipeline = [{ $group: { _id: null, total: { $sum: '$amount' } } }]
-  const options = filterPipeline(filterOptions)
-  if (options.length) {
-    pipeline.unshift(...options)
-  }
-  const [{ total }] = await Record.aggregate(pipeline)
-  return total
-}
-
 function filterPipeline (options) {
   const pipeline = []
   if (options.category) {
@@ -82,4 +74,14 @@ function filterPipeline (options) {
     })
   }
   return pipeline
+}
+
+function getTotalAmount (records) {
+  if (records.length === 0) return 0
+  const total = records.map(record => record.amount).reduce((prev, curr) => prev + curr)
+  return formatNumber(total)
+}
+
+function formatNumber (number) {
+  return number.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ',')
 }

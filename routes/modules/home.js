@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     records.forEach(record => {
       record.amount = formatNumber(record.amount)
     })
-    return res.render('index', { records, totalAmount, categories, months })
+    return res.render('index', { records, totalAmount, categories, months, option })
   } catch (err) {
     console.log(err)
   }

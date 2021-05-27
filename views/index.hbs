@@ -6,16 +6,20 @@
     </div>
   </div>
   <div class="row">
-    <button class="col-8 col-sm-6 mx-auto btn-secondary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-      支付類別
-    </button>
-    <ul class="dropdown-menu col-8 col-sm-6 mx-auto" aria-labelledby="dropdownMenuButton1">
-      <li><a href="/?category=" class="dropdown-item">全部</a></li>
-      {{#forEach categories}}
-      <li><a href="/?category={{categoryName}}" class="dropdown-item">{{categoryName}}</a></li>
-      {{/forEach}}
-    </ul>
-
+    <form action="/" method="get" class="filter-form">
+      <select name="category">
+        <option value="">選擇全部</option>
+        {{#forEach categories}}
+        <option value="{{categoryName}}" {{#eq categoryName ../option.category}}selected{{/eq}}>{{categoryName}}</option>
+        {{/forEach}}
+      </select>
+      <select name="date">
+        <option value="">選擇全部</option>
+        {{#each months}}
+        <option value="{{this}}" {{#eq this ../option.date}}selected{{/eq}}>{{this}}</option>
+        {{/each}}
+      </select>
+    </form>
   </div>
   <div class="row">
     <a href="/expenses/create" class="col-8 col-sm-6 mx-auto btn btn-success">新增紀錄</a>
@@ -53,3 +57,5 @@
     </div>
   </div>
 </div>
+
+<script src="/js/index.js"></script>

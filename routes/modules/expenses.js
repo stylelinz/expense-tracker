@@ -3,6 +3,8 @@ const router = express.Router()
 
 const Record = require('../../models/Record')
 const Category = require('../../models/Category')
+// dateFormat函式會將輸入的日期格式轉換為瀏覽器支援的'YYYY-MM-DD'格式，
+// 沒有輸入值時，預設為今天日期
 const dateFormat = require('../../util/formattedDate')
 
 router.get('/create', async (req, res) => {
@@ -14,11 +16,10 @@ router.get('/create', async (req, res) => {
 router.get('/:id/edit', async (req, res) => {
   try {
     const { id } = req.params
-    const categories = await Category.find().lean()
-    const record = await Record.findById(id).populate({ path: 'categoryId' }).lean()
+    const [categories, record] = await Promise.all([Category.find().lean(), Record.findById(id).lean()])
     record.date = dateFormat(record.date)
     const today = dateFormat()
-    return res.render('edit', { categories, expense: record, today })
+    return res.render('edit', { categories, record, today })
   } catch (err) {
     console.log(err)
   }
@@ -26,8 +27,8 @@ router.get('/:id/edit', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const newExpense = req.body
-    await Record.create(newExpense)
+    const newRecord = req.body
+    await Record.create(newRecord)
     return res.redirect('/')
   } catch (err) {
     console.log(err)
@@ -37,8 +38,8 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params
-    const editedExpense = req.body
-    await Record.findByIdAndUpdate(id, editedExpense)
+    const editedRecord = req.body
+    await Record.findByIdAndUpdate(id, editedRecord)
     return res.redirect('/')
   } catch (err) {
     console.log(err)

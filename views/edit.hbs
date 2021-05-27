@@ -1,25 +1,25 @@
 <div class="mt-5">
   <div class="container">
-    <form action="/expenses/{{expense._id}}?_method=PUT" method="POST" class="shadow-lg p-3">
+    <form action="/expenses/{{record._id}}?_method=PUT" method="POST" class="shadow-lg p-3">
       <div class="mb-3">
         <label for="name" class="form-label">支付項目</label>
-        <input type="text" name="name" id="name" placeholder="name" class="form-control" value="{{expense.name}}" required>
+        <input type="text" name="name" id="name" placeholder="name" class="form-control" value="{{record.name}}" required>
       </div>
       <div class="mb-3">
         <label for="date" class="form-label">支付日期</label>
-        <input type="date" name="date" id="date" max="{{today}}" class="form-control" value="{{expense.date}}" required>
+        <input type="date" name="date" id="date" max="{{today}}" class="form-control" value="{{record.date}}" required>
       </div>
       <div class="mb-3">
         <label for="category" class="form-label">支付類別</label>
-        <select name="categoryId" id="category" class="form-select" required>
+        <select name="category" id="category" class="form-select" required>
           {{#forEach categories}}
-          <option value="{{_id}}" {{#eq categoryName ../expense.categoryId.categoryName}}selected{{/eq}}>{{categoryName}}</option>
+          <option value="{{categoryName}}" {{#eq categoryName ../record.category}}selected{{/eq}}>{{categoryName}}</option>
           {{/forEach}}
         </select>
       </div>
       <div class="mb-3">
         <label for="amount" class="form-label">支付金額</label>
-        <input type="number" name="amount" id="amount" placeholder="amount" class="form-control" value="{{expense.amount}}" required>
+        <input type="number" name="amount" id="amount" placeholder="amount" class="form-control" value="{{record.amount}}" required>
       </div>
       <div class="d-flex flex-row-reverse">
         <button type="submit" class="btn btn-info">Edit</button>

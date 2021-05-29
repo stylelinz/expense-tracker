@@ -12,7 +12,16 @@
   <header>
     <nav class="navbar navbar-dark bg-primary">
       <div class="container-fluid">
-        <a class="navbar-brand mx-auto mx-md-0" href="/">Expense Tracker</a>
+        <a class="navbar-brand mx-auto mx-md-0" href="/">
+          {{#if isAuthenticated}}
+            {{user.name}}的
+          {{/if}}支出紀錄簿
+        </a>
+        {{#if isAuthenticated}}
+        <a href="/users/logout" class="btn btn-outline-light">登出</a>
+        {{else}}
+        <a href="/users/login" class="btn btn-outline-light">登入</a>
+        {{/if}}
       </div>
     </nav>
   </header>

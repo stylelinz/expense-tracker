@@ -5,7 +5,8 @@ const mongodbUri = process.env.MONGODB_URI || 'mongodb://localhost/expense-track
 mongoose.connect(mongodbUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useCreateIndex: true
 }).catch(err => console.log(err))
 
 const db = mongoose.connection

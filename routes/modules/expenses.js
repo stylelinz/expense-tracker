@@ -7,16 +7,19 @@ const Category = require('../../models/Category')
 // 沒有輸入值時，預設為今天日期
 const dateFormat = require('../../util/formattedDate')
 
+// 新增紀錄頁面
 router.get('/create', async (req, res) => {
   const categories = await Category.find().lean()
   const today = dateFormat()
   return res.render('create', { categories, today })
 })
 
+// 修改紀錄頁面
 router.get('/:id/edit', async (req, res) => {
   try {
     const { id } = req.params
-    const [categories, record] = await Promise.all([Category.find().lean(), Record.findById(id).lean()])
+    const { _id: userId } = req.user
+    const [categories, record] = await Promise.all([Category.find().lean(), Record.findOne({ id, userId }).lean()])
     record.date = dateFormat(record.date)
     const today = dateFormat()
     return res.render('edit', { categories, record, today })

@@ -2,9 +2,10 @@ const { body } = require('express-validator')
 
 const Category = require('../models/Category')
 const categories = Category.find(null, 'categoryName').map(item => item.categoryName)
+const User = require('../models/User')
 
 module.exports = {
-  record: [
+  validateRecord: [
     body().trim(),
     body('name').notEmpty().withMessage('支付名稱為必填。').bail()
       .isLength({ max: 10 }).withMessage('名稱最多10個字。').bail()
@@ -13,5 +14,29 @@ module.exports = {
     body('category').isIn(categories).withMessage('請選擇類別'),
     body('amount').notEmpty().withMessage('支付金額為必填。').bail()
       .isInt({ min: 1, max: 9999999999 }).withMessage('醒醒吧，你沒有這麼多錢。')
-  ]
+  ],
+  validateRegister: [
+    body('name').notEmpty().withMessage('請輸入名稱').bail()
+      .isLength({ max: 12 }).withMessage('名稱限制12個字'),
+    body('email').notEmpty().withMessage('請輸入 Email').bail()
+      .isEmail().withMessage('請輸入正確的 Email 格式')
+      .custom(async (email) => {
+        const user = await User.find({ email })
+        if (user) {
+          throw new Error('這個 Email 已經用過了。')
+        }
+      }),
+    body('password').notEmpty().withMessage('請輸入密碼').bail()
+      .isLength({ min: 8 }).withMessage('密碼至少8個字。'),
+    body('confirmPassword').custom((confirmPwd, { req }) => {
+      const { password } = req.body
+      if (confirmPwd !== password) {
+        throw new Error('密碼不正確，請再輸入一次。')
+      }
+      return true
+    })
+  ],
+  errorFormatter: ({ msg }) => {
+    return msg
+  }
 }

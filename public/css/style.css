@@ -31,7 +31,7 @@ td .btn {
   margin-bottom: 5px;
 }
 
-.sign-form button {
+.sign-form button[type="submit"] {
   font-size: 20px;
   display: block;
   width: 90%;

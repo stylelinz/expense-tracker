@@ -1,32 +1,44 @@
 [
   {
-    "name": "營養午餐",
+    "name": "午餐",
     "category": "餐飲食品",
-    "amount": 50
+    "amount": 100,
+    "date": "2021-04-20",
+    "merchant": "美而美早餐店"
   },
   {
-    "name": "買飲料2",
-    "category": "餐飲食品",
-    "amount": "50"
+    "name": "魔物獵人:崛起",
+    "category": "休閒娛樂",
+    "amount": 1920,
+    "date": "2021-03-26",
+    "merchant": "地下街電玩世界"
   },
   {
-    "name": "買飲料3",
-    "category": "餐飲食品",
-    "amount": "50"
+    "name": "超速學習",
+    "category": "其他",
+    "amount": 380,
+    "date": "2021-03-13",
+    "merchant": "誠品台大店"
   },
   {
-    "name": "買飲料4",
-    "category": "餐飲食品",
-    "amount": "150"
+    "name": "電話費",
+    "category": "家居物業",
+    "amount": 713,
+    "date": "2021-05-14",
+    "merchant": "遠傳電信"
   },
   {
-    "name": "買飲料5",
-    "category": "餐飲食品",
-    "amount": "70"
+    "name": "停車費",
+    "category": "交通出行",
+    "amount": 80,
+    "date": "2021-04-23",
+    "merchant": "公共停車場"
   },
   {
-    "name": "買飲料6",
-    "category": "餐飲食品",
-    "amount": "60"
+    "name": "健身環大冒險",
+    "category": "休閒娛樂",
+    "amount": 2550,
+    "date": "2021-01-14",
+    "merchant": "地下街電玩世界"
   }
 ]

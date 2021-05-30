@@ -1,6 +1,7 @@
 <div class="mt-5">
   <div class="container">
     <form action="/expenses/{{record._id}}?_method=PUT" method="POST" class="shadow-lg p-3 needs-validation" novalidate>
+      {{> message}}
       <div class="mb-3">
         <label for="name" class="form-label">支付項目</label>
         <input type="text" name="name" id="name" placeholder="name" class="form-control" value="{{record.name}}" required>
@@ -23,6 +24,11 @@
         <label for="amount" class="form-label">支付金額</label>
         <input type="number" name="amount" id="amount" placeholder="amount" class="form-control" value="{{record.amount}}" max="9999999999" required>
         <div class="invalid-feedback">請填寫支付金額</div>
+      </div>
+      <div class="mb-3">
+        <label for="merchant" class="form-label">支付店家</label>
+        <input type="text" name="merchant" id="merchant" placeholder="請填入店家名稱" class="form-control" value="{{record.merchant}}" required>
+        <div class="invalid-feedback">請填寫店家名稱</div>
       </div>
       <div class="d-flex flex-row-reverse">
         <button type="submit" class="btn btn-info">Edit</button>

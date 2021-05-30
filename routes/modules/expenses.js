@@ -64,7 +64,7 @@ router.put('/:_id', validateRecord, async (req, res) => {
     const today = dateFormat()
     editedRecord._id = _id
     res.status(400)
-    return res.render('edit', { categories, today, editedRecord, errorMsg: errors.array() })
+    return res.render('edit', { categories, today, record: editedRecord, errorMsg: errors.array() })
   }
   try {
     await Record.findOneAndUpdate({ _id, userId }, editedRecord)

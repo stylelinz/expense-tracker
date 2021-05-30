@@ -9,7 +9,8 @@ module.exports = {
       .escape(),
     body('date').isDate().withMessage('請輸入正確的日期格式。').bail(),
     body('amount').notEmpty().withMessage('支付金額為必填。').bail()
-      .isInt({ min: 1, max: 9999999999 }).withMessage('醒醒吧，你沒有這麼多錢。')
+      .isInt({ min: 1, max: 9999999999 }).withMessage('醒醒吧，你沒有這麼多錢。'),
+    body('merchant').isLength({ max: 10 }).withMessage('店家名稱為10字以內。')
   ],
   validateRegister: [
     body('name').notEmpty().withMessage('請輸入名稱').bail()

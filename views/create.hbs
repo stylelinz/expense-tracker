@@ -26,8 +26,13 @@
       </div>
       <div class="mb-3">
         <label for="amount" class="form-label">支付金額</label>
-        <input type="number" name="amount" id="amount" placeholder="請填入支付金額" class="form-control" value="{{newRecord.amount}}" required>
+        <input type="number" name="amount" id="amount" placeholder="請填入支付金額" class="form-control" max="9999999999" value="{{newRecord.amount}}" required>
         <div class="invalid-feedback">請填寫支付金額</div>
+      </div>
+      <div class="mb-3">
+        <label for="merchant" class="form-label">支付店家</label>
+        <input type="text" name="merchant" id="merchant" placeholder="請填入店家名稱" class="form-control" value="{{newRecord.merchant}}" required>
+        <div class="invalid-feedback">請填寫店家名稱</div>
       </div>
       <div class="d-flex flex-row-reverse">
         <button type="submit" class="btn btn-primary">新增紀錄</button>

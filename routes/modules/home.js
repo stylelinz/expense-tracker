@@ -46,6 +46,7 @@ async function getAllRecords (userId, filterOptions) {
         amount: 1,
         category: 1,
         icon: '$c.categoryIcon',
+        merchant: 1,
         date: { $dateToString: { format: '%Y-%m-%d', date: '$date' } }
       }
     },

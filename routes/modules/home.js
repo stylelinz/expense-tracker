@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
     const option = req.query
     const { _id: userId } = req.user
     // Render Category options
-    const [categories, months] = await Promise.all([Category.find(null, 'categoryName').lean(), getRecordsMonth()])
+    const [categories, months] = await Promise.all([Category.find(null, 'categoryName').lean(), getMonthsByUser(userId)])
     const records = await getAllRecords(userId, option)
     const totalAmount = getTotalAmount(records)
     records.forEach(record => {
@@ -23,8 +23,9 @@ router.get('/', async (req, res) => {
 
 module.exports = router
 
-async function getRecordsMonth () {
+async function getMonthsByUser (userId) {
   const dates = await Record.aggregate([
+    { $match: { userId } },
     {
       $group: {
         _id: {

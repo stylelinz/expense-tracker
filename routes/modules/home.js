@@ -7,9 +7,10 @@ const Category = require('../../models/Category')
 router.get('/', async (req, res) => {
   try {
     const option = req.query
+    const { _id: userId } = req.user
     // Render Category options
     const [categories, months] = await Promise.all([Category.find(null, 'categoryName').lean(), getRecordsMonth()])
-    const records = await getAllRecords(option)
+    const records = await getAllRecords(userId, option)
     const totalAmount = getTotalAmount(records)
     records.forEach(record => {
       record.amount = formatNumber(record.amount)
@@ -27,8 +28,9 @@ async function getRecordsMonth () {
   return dates.map(date => date._id)
 }
 
-async function getAllRecords (filterOptions) {
+async function getAllRecords (userId, filterOptions) {
   const pipeline = [
+    { $match: { userId } },
     {
       $lookup: {
         from: 'categories',

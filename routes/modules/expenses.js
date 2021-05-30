@@ -1,27 +1,31 @@
 const express = require('express')
 const router = express.Router()
-const { validateResult } = require('express-validator')
+const { validationResult } = require('express-validator')
 
 const Record = require('../../models/Record')
 const Category = require('../../models/Category')
-const validator = require('../../middleware/validate')
+const { validateRecord, errorFormatter } = require('../../middleware/validate')
 // dateFormat函式會將輸入的日期格式轉換為瀏覽器支援的'YYYY-MM-DD'格式，
 // 沒有輸入值時，預設為今天日期
 const dateFormat = require('../../util/formattedDate')
 
 // 新增紀錄頁面
-router.get('/create', validator.record, async (req, res) => {
-  const categories = await Category.find().lean()
-  const today = dateFormat()
-  return res.render('create', { categories, today })
+router.get('/create', async (req, res) => {
+  try {
+    const categories = await Category.find().lean()
+    const today = dateFormat()
+    return res.render('create', { categories, today })
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 // 修改紀錄頁面
-router.get('/:id/edit', async (req, res) => {
+router.get('/:_id/edit', async (req, res) => {
   try {
-    const { id } = req.params
+    const { _id } = req.params
     const { _id: userId } = req.user
-    const [categories, record] = await Promise.all([Category.find().lean(), Record.findOne({ id, userId }).lean()])
+    const [categories, record] = await Promise.all([Category.find().lean(), Record.findOne({ _id, userId }).lean()])
     record.date = dateFormat(record.date)
     const today = dateFormat()
     return res.render('edit', { categories, record, today })
@@ -30,9 +34,17 @@ router.get('/:id/edit', async (req, res) => {
   }
 })
 
-router.post('/', async (req, res) => {
+// 新增紀錄功能，含表單驗證
+router.post('/', validateRecord, async (req, res) => {
+  const newRecord = req.body
+  newRecord.userId = req.user._id
+  const errors = validationResult(req).formatWith(errorFormatter)
+  if (!errors.isEmpty()) {
+    const categories = await Category.find().lean()
+    res.status(400)
+    return res.render('create', { categories, newRecord, errorMsg: errors.array() })
+  }
   try {
-    const newRecord = req.body
     await Record.create(newRecord)
     return res.redirect('/')
   } catch (err) {
@@ -40,21 +52,34 @@ router.post('/', async (req, res) => {
   }
 })
 
-router.put('/:id', async (req, res) => {
+// 修改紀錄功能，含表單驗證
+router.put('/:_id', validateRecord, async (req, res) => {
+  const { _id } = req.params
+  const { _id: userId } = req.user
+  const editedRecord = req.body
+  editedRecord.userId = userId
+  const errors = validationResult(req).formatWith(errorFormatter)
+  if (!errors.isEmpty()) {
+    const categories = await Category.find().lean()
+    const today = dateFormat()
+    editedRecord._id = _id
+    res.status(400)
+    return res.render('edit', { categories, today, editedRecord, errorMsg: errors.array() })
+  }
   try {
-    const { id } = req.params
-    const editedRecord = req.body
-    await Record.findByIdAndUpdate(id, editedRecord)
+    await Record.findOneAndUpdate({ _id, userId }, editedRecord)
     return res.redirect('/')
   } catch (err) {
     console.log(err)
   }
 })
 
-router.delete('/:id', async (req, res) => {
+// 刪除記錄功能
+router.delete('/:_id', async (req, res) => {
   try {
-    const { id } = req.params
-    await Record.findByIdAndDelete(id)
+    const { _id } = req.params
+    const { _id: userId } = req.user
+    await Record.deleteOne({ _id, userId })
     return res.redirect('/')
   } catch (err) {
     console.log(err)

@@ -24,7 +24,16 @@ router.get('/', async (req, res) => {
 module.exports = router
 
 async function getRecordsMonth () {
-  const dates = await Record.aggregate([{ $group: { _id: { $dateToString: { format: '%Y-%m', date: '$date' } } } }])
+  const dates = await Record.aggregate([
+    {
+      $group: {
+        _id: {
+          $dateToString: { format: '%Y-%m', date: '$date' }
+        }
+      }
+    },
+    { $sort: { _id: -1 } }
+  ])
   return dates.map(date => date._id)
 }
 

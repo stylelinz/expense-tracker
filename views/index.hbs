@@ -6,20 +6,22 @@
     </div>
   </div>
   <div class="row">
-    <form action="/" method="get" class="filter-form">
-      <select name="category">
-        <option value="">選擇全部</option>
-        {{#forEach categories}}
-        <option value="{{categoryName}}" {{#eq categoryName ../option.category}}selected{{/eq}}>{{categoryName}}</option>
-        {{/forEach}}
-      </select>
-      <select name="date">
-        <option value="">選擇全部</option>
-        {{#each months}}
-        <option value="{{this}}" {{#eq this ../option.date}}selected{{/eq}}>{{this}}</option>
-        {{/each}}
-      </select>
-    </form>
+    <div class="col-8 mx-auto">
+      <form action="/" method="get" class="input-group filter-form">
+        <select name="category" class="form-select">
+          <option value="">選擇類別</option>
+          {{#forEach categories}}
+          <option value="{{categoryName}}" {{#eq categoryName ../option.category}}selected{{/eq}}>{{categoryName}}</option>
+          {{/forEach}}
+        </select>
+        <select name="date" class="form-select">
+          <option value="">選擇月份</option>
+          {{#each months}}
+          <option value="{{this}}" {{#eq this ../option.date}}selected{{/eq}}>{{this}}</option>
+          {{/each}}
+        </select>
+      </form>
+    </div>
   </div>
   <div class="row">
     <a href="/expenses/create" class="col-8 col-sm-6 mx-auto btn btn-success">新增紀錄</a>

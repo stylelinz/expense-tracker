@@ -3,8 +3,14 @@
 由 mongodb 與 nodeJS 開發的個人記帳應用程式。
 
 ![demo](demo.png)
+![login](login.png)
 
 ## 功能
+* 可依照支付日期篩選支出紀錄 (2021-05-30新增)
+* 加入使用者註冊、登入功能 (2021-05-30新增)
+* 加入臉書第三方登入功能 (2021-05-30新增)
+  * 僅向社群平台請求`名稱`與`email`作為登入用途
+* 增加必填紀錄屬性`店家` (2021-05-30新增)
 * 瀏覽所有的支出紀錄
 * 新增一筆支出紀錄
 * 修改一筆支出紀錄的所有屬性
@@ -12,6 +18,11 @@
 * 可依照支付類別篩選支出紀錄
 * 篩選後顯示該類別的支付總額
 
+```
+# 可使用此帳號試用網站
+email: user1@example.com
+password: 12345678
+```
 ## 環境建置與需求 (prerequisites)
  * [Node.js](https://nodejs.org/en/): v15.11.0
  * [MongoDB](https://www.mongodb.com/try/download/community): v4.2.13

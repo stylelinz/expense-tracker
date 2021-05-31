@@ -18,7 +18,7 @@ module.exports = {
     body('email').notEmpty().withMessage('請輸入 Email').bail()
       .isEmail().withMessage('請輸入正確的 Email 格式')
       .custom(async (email) => {
-        const user = await User.find({ email })
+        const user = await User.findOne({ email })
         if (user) {
           throw new Error('這個 Email 已經用過了。')
         }
